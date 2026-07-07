@@ -151,6 +151,15 @@ export const config = {
     authors: {
       maxEditable: 30,
     },
+    types: [
+      { value: "BOOK", text: "Book", label: "Book", order: 1 },
+      { value: "PROCEEDINGS", text: "Proceedings", label: "Proceedings", order: 2 },
+      { value: "STANDARD", text: "Standard", label: "Standard", order: 3 },
+      { value: "SERIAL_ISSUE", text: "Serial issue", label: "Serial issue", order: 4 },
+      { value: "ARTICLE", text: "Article", label: "Article", order: 5 },
+      { value: "MULTIMEDIA", text: "Multimedia", label: "Multimedia", order: 6 },
+      { value: "THESIS", text: "Thesis", label: "Thesis", order: 7 },
+    ],
   },
   ILL_BORROWING_REQUESTS: {
     defaultType: "PHYSICAL_COPY",
