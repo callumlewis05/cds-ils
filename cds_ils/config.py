@@ -803,4 +803,4 @@ ILS_SELF_CHECKOUT_ENABLED = True
 # REST_CSRF_ENABLED = False
 
 # Enable larger file uploads for importer - 1GiB
-MAX_CONTENT_LENGTH = 1000 * 1024 * 1024  
+MAX_CONTENT_LENGTH = 1000 * 1024 * 1024
