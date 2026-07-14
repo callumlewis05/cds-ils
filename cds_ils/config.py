@@ -798,3 +798,9 @@ SECURITY_PASSWORD_SINGLE_HASH = True
 
 # Feature Toggles
 ILS_SELF_CHECKOUT_ENABLED = True
+
+# Enable for local dev to stop CSRF token error
+# REST_CSRF_ENABLED = False
+
+# Enable larger file uploads for importer - 1GiB
+MAX_CONTENT_LENGTH = 1000 * 1024 * 1024  
