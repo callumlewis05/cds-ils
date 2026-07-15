@@ -3,11 +3,10 @@
 
 """Document schema for overwritten marshmallow loader with new document type."""
 
-from marshmallow import fields, validate
-
 from invenio_app_ils.documents.loaders.jsonschemas.document import (
     DocumentSchemaV1 as ILSDocumentSchemaV1,
 )
+from marshmallow import fields, validate
 
 from cds_ils.documents.api import Document
 

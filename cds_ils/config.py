@@ -31,7 +31,6 @@ from invenio_app_ils.circulation.utils import (
 )
 from invenio_app_ils.config import CELERY_BEAT_SCHEDULE as ILS_CELERY_BEAT_SCHEDULE
 from invenio_app_ils.config import RECORDS_REST_ENDPOINTS, RECORDS_REST_FACETS
-from cds_ils.documents.api import Document
 from invenio_app_ils.documents.api import DOCUMENT_PID_TYPE
 from invenio_app_ils.eitems.api import EITEM_PID_TYPE
 from invenio_app_ils.ill.api import (
@@ -61,6 +60,8 @@ from invenio_oauthclient.contrib import cern_openid
 from invenio_records_rest.schemas.fields import SanitizedUnicode
 from invenio_records_rest.utils import deny_all
 from marshmallow.fields import Bool, List
+
+from cds_ils.documents.api import Document
 
 from .circulation.utils import circulation_cds_extension_max_count
 from .document_requests.notifications.filters import (
@@ -400,13 +401,16 @@ RECORDS_REST_ENDPOINTS[PATRON_PID_TYPE]["indexer_class"] = PatronIndexer
 RECORDS_REST_ENDPOINTS[LOCATION_PID_TYPE]["create_permission_factory_imp"] = deny_all
 RECORDS_REST_ENDPOINTS[LOCATION_PID_TYPE]["delete_permission_factory_imp"] = deny_all
 # Override serializer for e-items that require authentication
+RECORDS_REST_ENDPOINTS[DOCUMENT_PID_TYPE]["record_serializers"] = {
+    "application/json": "cds_ils.literature.serializers:json_v1_response"
+}
 RECORDS_REST_ENDPOINTS[DOCUMENT_PID_TYPE]["record_loaders"] = {
     "application/json": "cds_ils.documents.loaders:document_loader"
 }
 RECORDS_REST_ENDPOINTS[DOCUMENT_PID_TYPE]["record_class"] = Document
-RECORDS_REST_ENDPOINTS[DOCUMENT_PID_TYPE]["item_route"] = (
-    '/documents/<pid(docid, record_class="cds_ils.documents.api:Document"):pid_value>'
-)
+RECORDS_REST_ENDPOINTS[DOCUMENT_PID_TYPE][
+    "item_route"
+] = '/documents/<pid(docid, record_class="cds_ils.documents.api:Document"):pid_value>'
 RECORDS_REST_ENDPOINTS[DOCUMENT_PID_TYPE]["search_serializers"] = {
     "application/json": "cds_ils.literature.serializers:json_v1_search",
     "text/csv": "cds_ils.literature.serializers:csv_v1_search",
