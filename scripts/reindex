@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2026 CERN.
+#
+# CDS-ILS is free software; you can redistribute it and/or modify it under
+# the terms of the MIT License; see LICENSE file for more details.
+
+if [ "$SENTRY_ENVIRONMENT" == "prod" ]
+then
+  echo "ERROR: you tried to run this on production. ABORTING."
+else
+  set -e
+   
+  echo "==> Reindexing internal locations, series, loans..."
+  ils index reindex -t ilocid --yes-i-know
+  ils index reindex -t serid --yes-i-know
+  ils index reindex -t loanid --yes-i-know
+  ils index run
+
+  echo ""
+  echo "==> Reindexing eitems, providers..."
+  ils index reindex -t eitmid --yes-i-know
+  ils index reindex -t pitmid --yes-i-know
+  ils index run
+   
+  echo ""
+  echo "==> Reindexing ILL requests..."
+  ils index reindex -t illlid --yes-i-know
+  ils index reindex -t illbid --yes-i-know
+  ils index run
+   
+  echo ""
+  echo "==> Reindexing documents, document requests, loans, providers..."
+  ils index reindex -t docid --yes-i-know
+  ils index reindex -t dreqid --yes-i-know
+  ils index reindex -t loanid --yes-i-know
+  ils index reindex -t pitmid --yes-i-know
+  ils index run
+   
+  echo ""
+  echo "==> Reindexing acquisition vendors and orders..."
+  ils index reindex -t acqvid --yes-i-know
+  ils index reindex -t acqoid --yes-i-know
+  ils index run
+   
+  echo ""
+  echo "==> Done. All known record types have been reindexed."
+fi
