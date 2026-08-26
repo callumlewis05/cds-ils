@@ -67,6 +67,11 @@ export const config = {
     requestStartOffset: 2,
     requestDuration: 120,
     loanWillExpireDays: 3,
+    deliveryMethods: {
+      DELIVERY: {
+        text: "To my office (free delivery service)",
+      },
+    },
   },
   VOCABULARIES: {
     documentRequests: {
